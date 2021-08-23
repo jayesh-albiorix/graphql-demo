@@ -2,13 +2,13 @@ const { ApolloError } = require("apollo-server-express");
 
 const resolvers = {
     Query: {
-        todoList: async (parent, args, context, info) => {
+        getUserList: async (parent, args, context, info) => {
             try {
                 console.log('info: ', info);
                 console.log('context: ', context);
                 console.log('args: ', args);
                 console.log('parent: ', parent);
-                const list = await context.dataSources.todo.getTodoList()
+                const list = await context.dataSources.user.getUserList()
                 console.log('list:====> ', list);
                 return list;
             } catch (err) {
@@ -16,13 +16,13 @@ const resolvers = {
                 throw new ApolloError(err)
             }
         },
-        todo: async (parent, args, context, info) => {
+        getUser: async (parent, args, context, info) => {
             try {
                 console.log('info: ', info);
                 console.log('context: ', context);
                 console.log('args: ', args);
                 console.log('parent: ', parent);
-                return await context.dataSources.todo.getTodo(args._id)
+                return await context.dataSources.user.getUser(args._id)
             } catch (err) {
                 console.log(err)
                 throw new ApolloError(err)
@@ -30,37 +30,37 @@ const resolvers = {
         }
     },
     Mutation: {
-        addTodo: async (parent, args, context, info) => {
+        addUser: async (parent, args, context, info) => {
             try {
                 console.log('info: ', info);
                 console.log('context: ', context);
                 console.log('args: ', args);
                 console.log('parent: ', parent);
-                return await context.dataSources.todo.addTodo(args.data)
+                return await context.dataSources.user.addUser(args.data)
             } catch (err) {
                 console.log(err)
                 throw new ApolloError(err)
             }
         },
-        updateTodo: async (parent, args, context, info) => {
+        updateUser: async (parent, args, context, info) => {
             try {
                 console.log('info: ', info);
                 console.log('context: ', context);
                 console.log('args: ', args);
                 console.log('parent: ', parent);
-                return await context.dataSources.todo.updateTodo(args._id, args.data);
+                return await context.dataSources.user.updateUser(args._id, args.data);
             } catch (err) {
                 console.log(err)
                 throw new ApolloError(err)
             }
         },
-        deleteTodo: async (parent, args, context, info) => {
+        removeUser: async (parent, args, context, info) => {
             try {
                 console.log('info: ', info);
                 console.log('context: ', context);
                 console.log('args: ', args);
                 console.log('parent: ', parent);
-                return await context.dataSources.todo.removeTodo(args._id);
+                return await context.dataSources.user.removeUser(args._id);
             } catch (err) {
                 console.log(err)
                 throw new ApolloError(err)

@@ -33,17 +33,27 @@ const addTodo = async (postData) => {
 
 const updateTodo = async (_id, postData) => {
     try {
-        return await TodoModel.findOneAndUpdate({ _id: _id }, postData, { new: true });
+        const updatedTodo = await TodoModel.findOneAndUpdate({ _id: _id }, postData, { new: true });
+        if (!updatedTodo) {
+            throw new Error("Document Not Found");
+        }
+        return updateTodo;
+
     } catch (error) {
-        throw new Error("Update todo failed")
+        throw new Error(error.message || "Update todo failed")
     }
 }
 
 const removeTodo = async (_id) => {
     try {
-        return await TodoModel.findByIdAndDelete(_id)
+        const deletedTodo = await TodoModel.findByIdAndDelete(_id)
+        console.log('deletedTodo: ', deletedTodo);
+        if (!deletedTodo) throw new Error("Document Not Found")
+
+        return deletedTodo
     } catch (error) {
-        throw new Error("Delete todo failed")
+        console.log('error: ', error.message);
+        throw new Error(error.message || "Delete todo failed")
 
     }
 }
