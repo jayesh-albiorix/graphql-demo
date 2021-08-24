@@ -1,8 +1,13 @@
 const TodoModel = require('./../../models/todo');
 
-const getTodoList = async () => {
+const getTodoList = async (skip, limit) => {
     try {
-        const postList = await TodoModel.find();
+
+        const limitValue = limit || 2;
+        const skipValue = skip ? skip * limitValue : 1;
+
+        const postList = await TodoModel.find().sort(
+            { _id: 1 }).limit(limitValue).skip(skipValue);
 
         return {
             data: postList

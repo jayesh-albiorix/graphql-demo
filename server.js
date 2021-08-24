@@ -9,8 +9,8 @@ const todoSchema = require('./src/graphql/schemas/todo')
 const todoResolver = require('./src/graphql/resolvers/todo');
 const userResolver = require('./src/graphql/resolvers/user');
 
-const typeDefs = require('./src/graphql/schema');
-const resolvers = require('./src/graphql/resolvers');
+// const typeDefs = require('./src/graphql/schema');
+// const resolvers = require('./src/graphql/resolvers');
 const todoDataSource = require('./src/graphql/datasources/todo');
 const userDataSource = require('./src/graphql/datasources/user');
 

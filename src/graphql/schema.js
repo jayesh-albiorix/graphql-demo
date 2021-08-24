@@ -2,7 +2,10 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
         type Query {
-            todoList: TodoListResponse
+            todoList(
+                skip: Int
+                limit: Int
+            ): TodoListResponse
             todo(
                 _id: ID!
             ): Todo
