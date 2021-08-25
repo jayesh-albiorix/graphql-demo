@@ -22,7 +22,10 @@ var userSchema = new Schema({
         type: String,
         required: false
     }
-}, { versionKey: false })
+}, { 
+    versionKey: false,
+    timestamps: true
+})
 
 var UserModel = mongoose.model('graphql-user', userSchema);
 

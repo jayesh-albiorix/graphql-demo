@@ -5,6 +5,7 @@ const typeDefs = gql`
             todoList(
                 skip: Int
                 limit: Int
+                search: String
             ): TodoListResponse
             todo(
                 _id: ID!
@@ -26,6 +27,12 @@ const typeDefs = gql`
 
         type TodoListResponse {
             data: [Todo!]
+            meta: TodoListMeta
+        }
+
+        type TodoListMeta {
+            total: Int,
+            hasMore: Boolean
         }
 
         type Todo {

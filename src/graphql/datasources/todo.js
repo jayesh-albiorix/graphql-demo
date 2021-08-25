@@ -1,16 +1,45 @@
 const TodoModel = require('./../../models/todo');
 
-const getTodoList = async (skip, limit) => {
+const getTodoList = async (skip, limit, searchVal) => {
     try {
+        const skipValue = skip ? ((parseInt(skip) - 1) * parseInt(limit)) : 0;
+        const limitValue = parseInt(limit) || 2;
+        console.log('skipValue: ', skipValue);
 
-        const limitValue = limit || 2;
-        const skipValue = skip ? skip * limitValue : 1;
+        // const postList = await TodoModel.find().sort(
+        //     { _id: 1 }).limit(limitValue).skip(skipValue);
 
-        const postList = await TodoModel.find().sort(
-            { _id: 1 }).limit(limitValue).skip(skipValue);
 
+        const [{ data, meta: [meta] }] = await TodoModel.aggregate([
+            {
+                $match: searchVal ? { $text: { $search: searchVal } } : {}
+            },
+            {
+                $sort: { "createdAt": 1 }
+            },
+            {
+                $facet: {
+                    meta: [
+                        { $count: "total" }
+                    ],
+                    data: [
+                        { $skip: skipValue },
+                        { $limit: limitValue }
+                    ]
+                }
+            }
+        ])
+
+        console.log('skipValue * limitValue: ', ((skip) * limit));
+        console.log('limitValue: ', limit);
+        console.log('skipValue: ', skip);
+        meta.hasMore = ((skip * limit) >= meta.total) ? false : true
+        // console.log(postList[0]);
+        // console.log(postList[0].metadata);
+        // console.log(postList[0].data);
         return {
-            data: postList
+            data,
+            meta
         }
     } catch (err) {
         console.log(err)

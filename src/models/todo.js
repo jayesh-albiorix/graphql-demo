@@ -18,8 +18,12 @@ var todoSchema = new Schema({
         type: String,
         required: false
     },
-    
-}, { versionKey: false })
+
+}, {
+    versionKey: false,
+    timestamps: true,
+})
+todoSchema.index({ title: 'text' })
 
 var TodoModel = mongoose.model('graphql-todo', todoSchema);
 

@@ -8,7 +8,7 @@ const resolvers = {
                 console.log('context: ', context);
                 console.log('args: ', args);
                 console.log('parent: ', parent);
-                const list = await context.dataSources.todo.getTodoList(args.skip, args.limit)
+                const list = await context.dataSources.todo.getTodoList(args.skip, args.limit, args.search)
                 console.log('list:====> ', list);
                 return list;
             } catch (err) {
