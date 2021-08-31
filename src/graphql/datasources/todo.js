@@ -1,8 +1,8 @@
 const TodoModel = require('./../../models/todo');
 
-const getTodoList = async (skip, limit, searchVal) => {
+const getTodoList = async (page, limit, searchVal) => {
     try {
-        const skipValue = skip ? ((parseInt(skip) - 1) * parseInt(limit)) : 0;
+        const skipValue = page ? ((parseInt(page) - 1) * parseInt(limit)) : 0;
         const limitValue = parseInt(limit) || 2;
         console.log('skipValue: ', skipValue);
 
@@ -30,10 +30,10 @@ const getTodoList = async (skip, limit, searchVal) => {
             }
         ])
 
-        console.log('skipValue * limitValue: ', ((skip) * limit));
+        console.log('skipValue * limitValue: ', ((page) * limit));
         console.log('limitValue: ', limit);
-        console.log('skipValue: ', skip);
-        meta.hasMore = ((skip * limit) >= meta.total) ? false : true
+        console.log('skipValue: ', page);
+        meta.hasMore = ((page * limit) >= meta.total) ? false : true
         // console.log(postList[0]);
         // console.log(postList[0].metadata);
         // console.log(postList[0].data);
