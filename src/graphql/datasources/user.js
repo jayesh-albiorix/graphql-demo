@@ -1,4 +1,5 @@
 const UserModel = require('./../../models/user');
+const bcrypt = require("bcrypt");
 
 const getUserList = async () => {
     try {
@@ -23,6 +24,8 @@ const getUser = async (_id) => {
 }
 const addUser = async (postData) => {
     try {
+        encryptedPassword = await bcrypt.hash(postData.password, 10);
+        postData.password = encryptedPassword;
         return await UserModel.create(postData);
 
     } catch (error) {
