@@ -27,12 +27,24 @@ const getTodoList = async (page, limit, searchVal) => {
                         { $limit: limitValue }
                     ]
                 }
+            },
+            {
+                $addFields: {
+                    meta: {
+                        $cond: [
+                            { $eq: ["$meta", []] },
+                            [{ total: 0 }],
+                            "$meta"
+                        ]
+                    }
+                }
             }
         ])
 
         console.log('skipValue * limitValue: ', ((page) * limit));
         console.log('limitValue: ', limit);
         console.log('skipValue: ', page);
+        console.log('meta: ', meta);
         meta.hasMore = ((page * limit) >= meta.total) ? false : true
         // console.log(postList[0]);
         // console.log(postList[0].metadata);
